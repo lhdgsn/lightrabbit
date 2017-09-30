@@ -152,19 +152,22 @@ orient_run2 = np.delete(X, orient_run2_mask, axis=1)
 
 plt.figure()
 plt.subplot(311)
-# initial (standing) yaw is about
-plt.plot(orient_run2[0,:], orient_run2[1,:], '.', markersize=1) # yaw
+for i in range(orient_run2.shape[1]):
+	if orient_run2[1,i] > 110:
+		orient_run2[1,i] -= 360
+# initial (standing) yaw is about 97.2
+plt.plot(orient_run2[0,:], orient_run2[1,:] - 97.2, '.', markersize=1) # yaw
 plt.ylabel('yaw (deg)')
 plt.title('orientation measurements during run2')
 
 plt.subplot(312)
-# initial (standing) pitch is about
-plt.plot(orient_run2[0,:], orient_run2[2,:], '.', markersize=1) # pitch
+# initial (standing) pitch is about - 100.1
+plt.plot(orient_run2[0,:], orient_run2[2,:] + 100.1, '.', markersize=1) # pitch
 plt.ylabel('pitch (deg)')
 
 plt.subplot(313)
-# initial (standing) roll is about
-plt.plot(orient_run2[0,:], orient_run2[3,:], '.', markersize=1) # roll
+# initial (standing) roll is about 2.5
+plt.plot(orient_run2[0,:], orient_run2[3,:] - 2.5, '.', markersize=1) # roll
 plt.ylabel('roll (deg)')
 
 plt.xlabel('time (s)')
