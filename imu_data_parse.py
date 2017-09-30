@@ -129,18 +129,21 @@ orient_run1 = np.delete(X, orient_run1_mask, axis=1)
 plt.figure()
 plt.subplot(311)
 # initial (standing) yaw is about -17
-plt.plot(orient_run1[0,:], orient_run1[1,:] + 17, '.', markersize=1) # yaw
+orient_run1[1,:] += 17
+plt.plot(orient_run1[0,:], orient_run1[1,:], '.', markersize=1) # yaw
 plt.ylabel('yaw (deg)')
 plt.title('orientation measurements during run1')
 
 plt.subplot(312)
 # initial (standing) pitch is about -100 (might be able to read breaths from this too)
-plt.plot(orient_run1[0,:], orient_run1[2,:] + 100, '.', markersize=1) # pitch
+orient_run1[2,:] += 100
+plt.plot(orient_run1[0,:], orient_run1[2,:], '.', markersize=1) # pitch
 plt.ylabel('pitch (deg)')
 
 plt.subplot(313)
 # initial (standing) roll is about 2.5
-plt.plot(orient_run1[0,:], orient_run1[3,:] - 2.5, '.', markersize=1) # roll
+orient_run1[3,:] -= 2.5
+plt.plot(orient_run1[0,:], orient_run1[3,:], '.', markersize=1) # roll
 plt.ylabel('roll (deg)')
 
 plt.xlabel('time (s)')
@@ -187,3 +190,20 @@ plt.show()
 # walk: (129.9, 159.3)
 # run1: (176.9, 200.6)
 # run2: (205.9, 236)
+
+#####################
+###### CONTROL ######
+#####################
+
+# initial look at whether angle is controllable
+
+# input is orientation, pitch from 180-198s
+mask = np.where((orient_run1[0,:] < 180) | (orient_run1[0,:] > 198))
+theta = np.delete(orient_run1, mask, axis=1)
+dt = orient_run1[0,1] - orient_run1[0,0]
+
+# angular rate
+theta_dot
+
+# angular acceleration
+theta_ddot
