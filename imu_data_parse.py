@@ -175,7 +175,7 @@ plt.ylabel('roll (deg)')
 
 plt.xlabel('time (s)')
 
-plt.show()
+# plt.show()
 
 
 
@@ -199,11 +199,34 @@ plt.show()
 
 # input is orientation, pitch from 180-198s
 mask = np.where((orient_run1[0,:] < 180) | (orient_run1[0,:] > 198))
-theta = np.delete(orient_run1, mask, axis=1)
+theta = np.delete(orient_run1[1,:], mask, axis=0)
 dt = orient_run1[0,1] - orient_run1[0,0]
 
 # angular rate
-theta_dot
+theta_dot = np.zeros(theta.shape)
+for i in range(len(theta)):
+	theta_dot[i-1] = (theta[i] - theta[i-1])/dt
+theta_dot[-1] = 0
 
 # angular acceleration
-theta_ddot
+theta_ddot = np.zeros(theta_dot.shape)
+for i in range(len(theta_dot)):
+	theta_ddot[i-1] = (theta_dot[i] - theta_dot[i-1])/dt
+
+plt.figure()
+plt.subplot(311)
+plt.plot(theta)
+plt.ylabel('angle (rad)')
+plt.subplot(312)
+plt.plot(theta_dot)
+plt.ylabel('angular rate (rad/s)')
+plt.subplot(313)
+plt.plot(theta_ddot)
+plt.ylabel('angular accel (rad/s^2)')
+plt.xlabel('sample #')
+
+plt.show()
+
+### actuation method 1: direct steering with motor controlled mirror
+
+### actuation method 2: mirrored polygon and pulsed laser
